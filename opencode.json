@@ -1,0 +1,21 @@
+
+{
+  "$schema": "https://opencode.ai/config.json",
+  "mcp": {
+    "21st": {
+      "type": "remote",
+      "url": "https://21st.dev/api/mcp",
+      "enabled": true,
+      "oauth": false,
+      "headers": {
+        "x-api-key": "API21st_sk_15b542a290300905e7fafecd2091d66a3414e4a1770e00b6caf24654c423a616"
+      }
+    },
+    "github": {
+      "type": "remote",
+      "url": "https://api.githubcopilot.com/mcp/",
+      "enabled": true,
+      "oauth": true
+    }
+  }
+}
