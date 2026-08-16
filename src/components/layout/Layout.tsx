@@ -3,6 +3,8 @@ import { Outlet } from "react-router-dom";
 import { Header } from "./Header";
 import { Footer } from "./Footer";
 import { CompareBar } from "@/components/compare/CompareBar";
+import { CartDrawer } from "@/components/cart/CartDrawer";
+import { MobileDrawer } from "./MobileDrawer";
 import { CommerceProvider } from "@/context/CommerceContext";
 
 export default function Layout() {
@@ -22,6 +24,8 @@ export default function Layout() {
         <Footer />
       </div>
       <CompareBar />
+      <CartDrawer />
+      <MobileDrawer />
     </CommerceProvider>
   );
 }

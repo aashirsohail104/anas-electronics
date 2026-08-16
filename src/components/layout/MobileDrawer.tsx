@@ -1,4 +1,4 @@
-import { useEffect, useRef, type ReactNode } from "react";
+import { useEffect, useRef, useState, type ReactNode } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
 
@@ -8,22 +8,30 @@ import { SearchBar } from "@/components/search/SearchBar";
 import { categoryHref } from "./categoryLinks";
 import type { Category } from "@/lib/api/types";
 
-export function MobileDrawer({
-  open,
-  onClose,
-  focusSearch = false,
-}: {
-  open: boolean;
-  onClose: () => void;
-  focusSearch?: boolean;
-}) {
+export function MobileDrawer() {
   const { categories, cartCount, wishlistCount, compareCount, openCart } = useCommerce();
   const panelRef = useRef<HTMLElement>(null);
   const searchWrapRef = useRef<HTMLDivElement>(null);
   const reduceMotion = useReducedMotion();
   const location = useLocation();
+  const [open, setOpen] = useState(false);
+  const [focusSearch, setFocusSearch] = useState(false);
 
   useFocusTrap(panelRef, open);
+
+  useEffect(() => {
+    const handler = (e: CustomEvent<{ search: boolean }>) => {
+      setFocusSearch(e.detail.search);
+      setOpen(true);
+    };
+    window.addEventListener("open-mobile-menu", handler as EventListener);
+    return () => window.removeEventListener("open-mobile-menu", handler as EventListener);
+  }, []);
+
+  const onClose = () => {
+    setOpen(false);
+    setFocusSearch(false);
+  };
 
   useEffect(() => {
     if (!open) return;

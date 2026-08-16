@@ -1,18 +1,13 @@
-import { useState } from "react";
 import { Link, NavLink } from "react-router-dom";
 
 import { useCommerce } from "@/context/CommerceContext";
 import { SearchBar } from "@/components/search/SearchBar";
-import { CartDrawer } from "@/components/cart/CartDrawer";
 import { AnnouncementBar } from "./AnnouncementBar";
 import { CategoryNav } from "./CategoryNav";
-import { MobileDrawer } from "./MobileDrawer";
 import { siteInfo } from "./siteInfo";
 
 export function Header() {
   const { cartCount, wishlistCount, compareCount, openCart } = useCommerce();
-  const [menuOpen, setMenuOpen] = useState(false);
-  const [searchOpen, setSearchOpen] = useState(false);
 
   return (
     <header className="sticky top-0 z-40 border-b border-border bg-background/90 backdrop-blur">
@@ -45,19 +40,6 @@ export function Header() {
           <CountLink to="/compare" count={compareCount} label="Compare" icon="compare" className="hidden md:inline-flex" />
           <button
             type="button"
-            onClick={() => {
-              setSearchOpen(true);
-              setMenuOpen(true);
-            }}
-            className="inline-flex h-9 w-9 items-center justify-center rounded-md text-muted-foreground transition-colors hover:bg-muted hover:text-foreground md:hidden"
-            aria-label="Search"
-            aria-haspopup="dialog"
-            aria-controls="mobile-menu"
-          >
-            <SearchIcon />
-          </button>
-          <button
-            type="button"
             onClick={openCart}
             className="relative inline-flex h-9 items-center gap-1.5 rounded-md px-3 text-sm font-medium text-foreground transition-colors hover:bg-muted"
             aria-label={`Open cart, ${cartCount} items`}
@@ -72,14 +54,29 @@ export function Header() {
           </button>
           <button
             type="button"
-            onClick={() => {
-              setSearchOpen(false);
-              setMenuOpen(true);
-            }}
+            onClick={openCart}
+            className="inline-flex h-9 w-9 items-center justify-center rounded-md text-muted-foreground transition-colors hover:bg-muted hover:text-foreground lg:hidden"
+            aria-label="Open cart"
+            aria-haspopup="dialog"
+          >
+            <CartIcon />
+          </button>
+          <button
+            type="button"
+            onClick={() => window.dispatchEvent(new CustomEvent("open-mobile-menu", { detail: { search: true } }))}
+            className="inline-flex h-9 w-9 items-center justify-center rounded-md text-muted-foreground transition-colors hover:bg-muted hover:text-foreground md:hidden"
+            aria-label="Search"
+            aria-haspopup="dialog"
+            aria-controls="mobile-menu"
+          >
+            <SearchIcon />
+          </button>
+          <button
+            type="button"
+            onClick={() => window.dispatchEvent(new CustomEvent("open-mobile-menu", { detail: { search: false } }))}
             className="inline-flex h-9 w-9 items-center justify-center rounded-md text-muted-foreground transition-colors hover:bg-muted hover:text-foreground lg:hidden"
             aria-label="Open menu"
             aria-haspopup="dialog"
-            aria-expanded={menuOpen}
             aria-controls="mobile-menu"
           >
             <MenuIcon />
@@ -88,16 +85,6 @@ export function Header() {
       </div>
 
       <CategoryNav />
-
-      <MobileDrawer
-        open={menuOpen}
-        focusSearch={searchOpen}
-        onClose={() => {
-          setMenuOpen(false);
-          setSearchOpen(false);
-        }}
-      />
-      <CartDrawer />
     </header>
   );
 }
