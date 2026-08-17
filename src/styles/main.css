@@ -26,7 +26,23 @@
 
 @layer components {
   .container-page {
-    @apply mx-auto w-full max-w-container px-4 sm:px-6 lg:px-8;
+    @apply mx-auto w-full px-4 sm:px-6 lg:px-8;
+    max-width: var(--container-max);
+  }
+  @media (min-width: 1024px) {
+    .container-page {
+      max-width: 90rem;
+    }
+  }
+  @media (min-width: 1280px) {
+    .container-page {
+      max-width: 100rem;
+    }
+  }
+  @media (min-width: 1536px) {
+    .container-page {
+      max-width: 112rem;
+    }
   }
   .text-balance {
     text-wrap: balance;
