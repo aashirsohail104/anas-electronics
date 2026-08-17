@@ -8,7 +8,7 @@
       "enabled": true,
       "oauth": false,
       "headers": {
-        "x-api-key": "API21st_sk_15b542a290300905e7fafecd2091d66a3414e4a1770e00b6caf24654c423a616"
+        "x-api-key": "{env:API_KEY_21ST}"
       }
     },
     "github": {
